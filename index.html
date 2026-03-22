@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小店專業導覽電子菜單</title>
+    <style>
+        /* --- 1. 基礎樣式 --- */
+        :root {
+            --primary-color: #e67e22;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; padding: 0; color: var(--text-color);
+            padding-bottom: 120px; 
+        }
+
+        /* --- 2. 頂部標題 --- */
+        .header { 
+            background-color: white; text-align: center; padding: 15px; 
+            box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+        }
+        .header h1 { margin: 0; font-size: 22px; font-weight: 800; color: var(--primary-color); }
+        .header h2 { margin: 5px 0 0 0; color: #7f8c8d; font-size: 13px; font-weight: 400; }
+
+        /* --- 3. 畫面切換控制 --- */
+        .view-section { display: none; padding: 15px; animation: fadeIn 0.3s ease-in-out; }
+        .view-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 4. 首頁：分類卡片列表 --- */
+        .category-list { display: flex; flex-direction: column; gap: 15px; }
+        .category-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); display: flex; align-items: center; cursor: pointer; transition: transform 0.2s; }
+        .category-card:active { transform: scale(0.98); }
+        .category-card-img { width: 100px; height: 100px; object-fit: cover; }
+        .category-card-info { padding: 15px; flex-grow: 1; }
+        .category-card-title { font-size: 18px; font-weight: bold; margin: 0 0 5px 0; color: var(--primary-color); }
+        .category-card-desc { font-size: 13px; color: #7f8c8d; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .category-card-arrow { padding: 15px; color: #bdc3c7; font-size: 20px; font-weight: bold; }
+
+        /* --- 5. 分類內容頁 --- */
+        .category-header { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: #7f8c8d; font-size: 16px; font-weight: bold; padding: 0; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .category-page-title { font-size: 24px; font-weight: bold; margin: 0 0 5px 0; color: var(--primary-color); border-left: 5px solid var(--primary-color); padding-left: 10px; }
+        .category-page-intro { font-size: 14px; color: #7f8c8d; margin: 0; padding-left: 15px; line-height: 1.5; }
+
+        /* --- 6. 菜單卡片 --- */
+        .menu-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .menu-item { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+        .item-img-container { width: 100%; height: 120px; overflow: hidden; background-color: #eee; }
+        .item-img { width: 100%; height: 100%; object-fit: cover; }
+        .item-info { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .item-info h3 { margin: 0 0 4px 0; font-size: 16px; font-weight: 700; }
+        .item-info p { margin: 0 0 8px 0; color: #7f8c8d; font-size: 12px; line-height: 1.4; }
+        .price-control-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price { font-weight: bold; color: #e74c3c; font-size: 16px; }
+        .quantity-control { display: flex; align-items: center; gap: 8px; }
+        .control-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd; background-color: white; color: var(--primary-color); font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+        .control-btn.minus { color: #95a5a6; }
+        .control-btn.plus { background-color: var(--primary-color); color: white; border: none; }
+        .item-qty { font-weight: bold; font-size: 16px; min-width: 20px; text-align: center; }
+        .initial-add-btn { background-color: white; color: var(--primary-color); border: 1px solid var(--primary-color); padding: 5px 12px; border-radius: 15px; font-size: 13px; font-weight: bold; cursor: pointer; }
+
+        /* --- 7. 購物車底部浮動欄 --- */
+        .bottom-cart-bar { position: fixed; bottom: 20px; left: 20px; right: 20px; background-color: #34495e; color: white; border-radius: 50px; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 200; display: none; }
+        .cart-info { display: flex; align-items: center; gap: 10px; }
+        .cart-count-badge { background-color: var(--primary-color); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+        .view-cart-btn { background-color: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; }
+
+        /* --- 8. 結帳確認頁 (新增) --- */
+        .cart-review-list { background: white; border-radius: 12px; padding: 15px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .review-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #eee; }
+        .review-item:last-child { border-bottom: none; }
+        .review-item-name { font-weight: bold; font-size: 16px; color: var(--text-color); }
+        .review-item-calc { color: #7f8c8d; font-size: 13px; margin-top: 5px; }
+        .review-item-subtotal { font-weight: bold; color: var(--primary-color); font-size: 16px; }
+        
+        .cart-summary { background: white; border-radius: 12px; padding: 15px; box-shadow: var(--shadow); }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+        .summary-total { color: #e74c3c; font-size: 24px; }
+        
+        .final-submit-btn { width: 100%; background-color: #2ecc71; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;}
+        .final-submit-btn:active { background-color: #27ae60; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🍜 老王麵館</h1>
+        <h2 id="table-display">正在讀取桌號...</h2>
+    </div>
+
+    <div id="home-view" class="view-section active">
+        <div class="category-list" id="category-list-container"></div>
+    </div>
+
+    <div id="category-view" class="view-section">
+        <button class="back-btn" onclick="goHome()">← 返回分類</button>
+        <div class="category-header">
+            <h2 class="category-page-title" id="current-category-title">分類標題</h2>
+            <p class="category-page-intro" id="current-category-intro">分類介紹...</p>
+        </div>
+        <div class="menu-items-grid" id="category-items-container"></div>
+    </div>
+
+    <div id="cart-view" class="view-section">
+        <button class="back-btn" onclick="closeCart()">← 繼續點餐修改</button>
+        <div class="category-header">
+            <h2 class="category-page-title" style="border-color: #2ecc71; color: #2ecc71;">確認訂單明細</h2>
+            <p class="category-page-intro">請確認您的餐點內容與數量是否正確，確認後再送出。</p>
+        </div>
+        
+        <div class="cart-review-list" id="cart-review-container">
+            </div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>總計金額</span>
+                <span class="summary-total">$<span id="review-total">0</span></span>
+            </div>
+            <button class="final-submit-btn" onclick="submitOrder()">✅ 確認無誤，送出訂單</button>
+        </div>
+    </div>
+
+    <div class="bottom-cart-bar" id="bottom-cart-bar">
+        <div class="cart-info">
+            🛒 
+            <div class="cart-count-badge" id="cart-count">0</div>
+            <span style="font-size: 18px; font-weight: bold;">$ <span id="cart-total">0</span></span>
+        </div>
+        <button class="view-cart-btn" onclick="openCart()">查看訂單</button>
+    </div>
+
+    <script>
+        // --- 1. 資料設定 ---
+        const categorizedMenuData = [
+            {
+                categoryName: '精選主食',
+                categoryIntro: '本館採用在地嚴選食材，所有麵條皆可調整軟硬度。',
+                categoryImg: 'https://via.placeholder.com/150/e67e22/ffffff?text=主食', 
+                items: [
+                    { id: 'p01', name: '招牌滷肉飯', desc: '肥瘦相間，祖傳醬汁，必點！', price: 50, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=滷肉飯' },
+                    { id: 'p02', name: '牛肉麵', desc: '湯頭濃郁，牛肉軟嫩入味', price: 180, img: 'https://via.placeholder.com/300x200/e74c3c/ffffff?text=牛肉麵' }
+                ]
+            },
+            {
+                categoryName: '美味小菜',
+                categoryIntro: '搭配麵食的最佳良伴，每份小菜皆附上獨家佐料。',
+                categoryImg: 'https://via.placeholder.com/150/2ecc71/ffffff?text=小菜',
+                items: [
+                    { id: 'p03', name: '燙青菜', desc: '時令蔬菜，清脆解膩', price: 40, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=燙青菜' },
+                    { id: 'p04', name: '滷蛋', desc: '入味十分的Q彈滷蛋', price: 15, img: 'https://via.placeholder.com/300x200/f1c40f/ffffff?text=滷蛋' }
+                ]
+            }
+        ];
+
+        // --- 2. 狀態管理 ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const tableNumber = urlParams.get('table') || '外帶/未指定';
+        document.getElementById('table-display').innerText = `內用桌號：${tableNumber}`;
+
+        let cart = {}; 
+        let currentCategoryIndex = -1; 
+
+        const itemLookup = {};
+        categorizedMenuData.forEach(cat => cat.items.forEach(item => itemLookup[item.id] = item));
+
+        // --- 3. 畫面 1 & 2：分類與菜單渲染 ---
+        function renderHomeView() {
+            const container = document.getElementById('category-list-container');
+            container.innerHTML = '';
+            categorizedMenuData.forEach((category, index) => {
+                container.innerHTML += `
+                    <div class="category-card" onclick="openCategory(${index})">
+                        <img src="${category.categoryImg}" alt="${category.categoryName}" class="category-card-img">
+                        <div class="category-card-info">
+                            <h3 class="category-card-title">${category.categoryName}</h3>
+                            <p class="category-card-desc">${category.categoryIntro}</p>
+                        </div>
+                        <div class="category-card-arrow">ᐳ</div>
+                    </div>`;
+            });
+        }
+
+        function openCategory(index) {
+            currentCategoryIndex = index;
+            const categoryData = categorizedMenuData[index];
+            document.getElementById('current-category-title').innerText = categoryData.categoryName;
+            document.getElementById('current-category-intro').innerText = categoryData.categoryIntro;
+            renderCategoryItems();
+
+            document.getElementById('home-view').classList.remove('active');
+            document.getElementById('category-view').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goHome() {
+            currentCategoryIndex = -1;
+            document.getElementById('category-view').classList.remove('active');
+            document.getElementById('home-view').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function renderCategoryItems() {
+            if (currentCategoryIndex === -1) return;
+            const container = document.getElementById('category-items-container');
+            container.innerHTML = '';
+            const categoryData = categorizedMenuData[currentCategoryIndex];
+
+            categoryData.items.forEach(item => {
+                const qtyInCart = cart[item.id] || 0;
+                let controlHtml = qtyInCart === 0 
+                    ? `<button class="initial-add-btn" onclick="updateQty('${item.id}', 1)">+ 加入</button>`
+                    : `<div class="quantity-control"><button class="control-btn minus" onclick="updateQty('${item.id}', -1)">-</button><span class="item-qty">${qtyInCart}</span><button class="control-btn plus" onclick="updateQty('${item.id}', 1)">+</button></div>`;
+
+                container.innerHTML += `
+                    <div class="menu-item">
+                        <div class="item-img-container"><img src="${item.img}" alt="${item.name}" class="item-img"></div>
+                        <div class="item-info">
+                            <div><h3>${item.name}</h3><p>${item.desc}</p></div>
+                            <div class="price-control-row"><span class="price">$${item.price}</span>${controlHtml}</div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // --- 4. 購物車核心邏輯 ---
+        function updateQty(itemId, change) {
+            if (!cart[itemId]) cart[itemId] = 0;
+            cart[itemId] += change;
+            if (cart[itemId] <= 0) delete cart[itemId];
+            renderCategoryItems(); 
+            renderBottomBar();     
+        }
+
+        function renderBottomBar() {
+            const bar = document.getElementById('bottom-cart-bar');
+            let totalQty = 0; let totalPrice = 0;
+            for (const [itemId, qty] of Object.entries(cart)) {
+                if (itemLookup[itemId]) { totalQty += qty; totalPrice += itemLookup[itemId].price * qty; }
+            }
+
+            if (totalQty > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('cart-count').innerText = totalQty;
+                document.getElementById('cart-total').innerText = totalPrice;
+            } else {
+                bar.style.display = 'none';
+                // 如果購物車清空了且人在結帳頁，自動退回上一頁
+                if(document.getElementById('cart-view').classList.contains('active')){
+                    closeCart();
+                }
+            }
+        }
+
+        // --- 5. 畫面 3：購物車確認頁邏輯 (新增) ---
+        function openCart() {
+            if (Object.keys(cart).length === 0) return alert("購物車是空的喔！");
+
+            // 隱藏其他畫面，顯示結帳頁
+            document.getElementById('home-view').classList.remove('active');
+            document.getElementById('category-view').classList.remove('active');
+            document.getElementById('cart-view').classList.add('active');
+            
+            // 進入結帳頁時，隱藏底部的黑色懸浮條
+            document.getElementById('bottom-cart-bar').style.display = 'none';
+            
+            window.scrollTo(0, 0);
+            renderCartReview(); // 產生明細
+        }
+
+        function closeCart() {
+            // 關閉結帳頁
+            document.getElementById('cart-view').classList.remove('active');
+            
+            // 判斷該回到分類頁還是首頁
+            if (currentCategoryIndex === -1) {
+                document.getElementById('home-view').classList.add('active');
+            } else {
+                document.getElementById('category-view').classList.add('active');
+            }
+            
+            // 重新顯示底部懸浮條
+            renderBottomBar();
+        }
+
+        function renderCartReview() {
+            const container = document.getElementById('cart-review-container');
+            container.innerHTML = '';
+            let totalPrice = 0;
+
+            for (const [itemId, qty] of Object.entries(cart)) {
+                const item = itemLookup[itemId];
+                const subtotal = item.price * qty;
+                totalPrice += subtotal;
+
+                // 產生每一筆明細的 HTML
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div>
+                            <div class="review-item-name">${item.name}</div>
+                            <div class="review-item-calc">$${item.price} x ${qty}</div>
+                        </div>
+                        <div class="review-item-subtotal">$${subtotal}</div>
+                    </div>
+                `;
+            }
+            // 更新總金額
+            document.getElementById('review-total').innerText = totalPrice;
+        }
+
+        // --- 6. 最終送出 ---
+        function submitOrder() {
+            const finalItems = [];
+            for (const [itemId, qty] of Object.entries(cart)) {
+                const menuItem = itemLookup[itemId];
+                finalItems.push({ name: menuItem.name, price: menuItem.price, quantity: qty, subtotal: menuItem.price * qty });
+            }
+
+            const orderData = { 
+                table: tableNumber, 
+                timestamp: new Date().toISOString(), 
+                items: finalItems, 
+                totalPrice: parseInt(document.getElementById('review-total').innerText) 
+            };
+
+            console.log("最終送出訂單：", JSON.stringify(orderData, null, 2));
+            alert("✅ 訂單已成功送出到廚房！\n請回座稍候，為您準備美味餐點。");
+            
+            // 送出後清空購物車並回到首頁 (模擬真實流程)
+            cart = {};
+            closeCart();
+            goHome();
+        }
+
+        // 初始啟動
+        renderHomeView();
+
+    </script>
+</body>
+</html>
