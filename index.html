@@ -314,7 +314,7 @@
         // --- 2. 狀態管理 ---
         const rawTable = urlParams.get('table');
 // 🌟 關鍵修改：在斜線的前後加上空白鍵
-        const tableNumber = rawTable ? `桌號 ${rawTable}` : '外帶 / 未指定';
+        const tableNumber = rawTable ? ${rawTable}: '外帶 / 未指定';
         document.getElementById('table-display').innerText = `目前位置：${tableNumber}`;
 
         let cart = {}; 
