@@ -140,25 +140,176 @@
     <script>
         // --- 1. 資料設定 ---
         const categorizedMenuData = [
-            {
-                categoryName: '精選主食',
-                categoryIntro: '本館採用在地嚴選食材，所有麵條皆可調整軟硬度。',
-                categoryImg: 'https://via.placeholder.com/150/e67e22/ffffff?text=主食', 
-                items: [
-                    { id: 'p01', name: '招牌滷肉飯', desc: '肥瘦相間，祖傳醬汁，必點！', price: 50, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=滷肉飯' },
-                    { id: 'p02', name: '牛肉麵', desc: '湯頭濃郁，牛肉軟嫩入味', price: 180, img: 'https://via.placeholder.com/300x200/e74c3c/ffffff?text=牛肉麵' }
-                ]
-            },
-            {
-                categoryName: '美味小菜',
-                categoryIntro: '搭配麵食的最佳良伴，每份小菜皆附上獨家佐料。',
-                categoryImg: 'https://via.placeholder.com/150/2ecc71/ffffff?text=小菜',
-                items: [
-                    { id: 'p03', name: '燙青菜', desc: '時令蔬菜，清脆解膩', price: 40, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=燙青菜' },
-                    { id: 'p04', name: '滷蛋', desc: '入味十分的Q彈滷蛋', price: 15, img: 'https://via.placeholder.com/300x200/f1c40f/ffffff?text=滷蛋' }
-                ]
-            }
-        ];
+    {
+        categoryName: '小菜',
+        categoryIntro: '小菜分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/e67e22/ffffff?text=小菜',
+        items: [
+            { id: 'p001', name: '起司西京燒', desc: '本店特選推薦', price: 90, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=起司西京燒' },
+            { id: 'p002', name: '鱈魚肝洋蔥', desc: '本店特選推薦', price: 120, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=鱈魚肝洋蔥' },
+            { id: 'p003', name: '涼拌鴨賞', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=涼拌鴨賞' },
+            { id: 'p004', name: '味付南極蝦', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=味付南極蝦' },
+            { id: 'p005', name: '炙燒明太子', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=炙燒明太子' },
+            { id: 'p006', name: '季節涼拌時蔬', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=季節涼拌時蔬' },
+            { id: 'p007', name: '紫蘇梅漬蕃茄', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=紫蘇梅漬蕃茄' },
+            { id: 'p008', name: '胡麻冷豆腐', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=胡麻冷豆腐' },
+            { id: 'p009', name: '紫蘇梅醬山藥', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=紫蘇梅醬山藥' },
+            { id: 'p010', name: '柚香涼拌洋蔥', desc: '本店特選推薦', price: 70, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=柚香涼拌洋蔥' },
+            { id: 'p011', name: '明太子烤山藥', desc: '本店特選推薦', price: 120, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=明太子烤山藥' },
+            { id: 'p012', name: '塩烤銀杏', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=塩烤銀杏' },
+            { id: 'p013', name: '韓式泡菜', desc: '本店特選推薦', price: 60, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=韓式泡菜' },
+            { id: 'p014', name: '炒青菜', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=炒青菜' }
+        ]
+    },
+    {
+        categoryName: '肉類',
+        categoryIntro: '肉類分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/2ecc71/ffffff?text=肉類',
+        items: [
+            { id: 'p015', name: '鱈魚西京燒', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=鱈魚西京燒' },
+            { id: 'p016', name: '蕃茄燉牛肉', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=蕃茄燉牛肉' },
+            { id: 'p017', name: '蜜製豚角煮', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=蜜製豚角煮' },
+            { id: 'p018', name: '蒜香奶油蝦', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=蒜香奶油蝦' },
+            { id: 'p019', name: '明太子雞腿排', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=明太子雞腿排' },
+            { id: 'p020', name: '泡菜炒豚肉', desc: '本店特選推薦', price: 150, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=泡菜炒豚肉' },
+            { id: 'p021', name: '塩烤鯖魚', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=塩烤鯖魚' },
+            { id: 'p022', name: '塩烤鮭魚大腹', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=塩烤鮭魚大腹' },
+            { id: 'p023', name: '鮭魚下巴', desc: '時價(請詢問服務人員)', price: 0, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=鮭魚下巴' }
+        ]
+    },
+    {
+        categoryName: '主食',
+        categoryIntro: '主食分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/3498db/ffffff?text=主食',
+        items: [
+            { id: 'p024', name: '冰花双味煎餃', desc: '本店特選推薦', price: 160, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=冰花双味煎餃' },
+            { id: 'p025', name: '青醬蛤蜊烏龍麵', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=青醬蛤蜊烏龍麵' },
+            { id: 'p026', name: '豚肉炒烏龍麵', desc: '本店特選推薦', price: 160, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=豚肉炒烏龍麵' },
+            { id: 'p027', name: '明太子茶泡飯', desc: '本店特選推薦', price: 120, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=明太子茶泡飯' },
+            { id: 'p028', name: '海苔銀魚飯', desc: '本店特選推薦', price: 60, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=海苔銀魚飯' },
+            { id: 'p029', name: '香Q的白米飯', desc: '本店特選推薦', price: 30, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=香Q的白米飯' }
+        ]
+    },
+    {
+        categoryName: '湯',
+        categoryIntro: '湯分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/e74c3c/ffffff?text=湯',
+        items: [
+            { id: 'p030', name: '山藥雞白湯', desc: '本店特選推薦', price: 150, img: 'https://via.placeholder.com/300x200/e74c3c/ffffff?text=山藥雞白湯' },
+            { id: 'p031', name: '蛤蜊雞白湯', desc: '本店特選推薦', price: 160, img: 'https://via.placeholder.com/300x200/e74c3c/ffffff?text=蛤蜊雞白湯' }
+        ]
+    },
+    {
+        categoryName: '炸物',
+        categoryIntro: '炸物分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/9b59b6/ffffff?text=炸物',
+        items: [
+            { id: 'p032', name: '麻油唐揚雞', desc: '本店特選推薦', price: 160, img: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=麻油唐揚雞' },
+            { id: 'p033', name: '塔香雞軟骨', desc: '本店特選推薦', price: 150, img: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=塔香雞軟骨' },
+            { id: 'p034', name: '牛蒡甜不辣', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=牛蒡甜不辣' },
+            { id: 'p035', name: '炸蝦天婦羅', desc: '本店特選推薦', price: 170, img: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=炸蝦天婦羅' },
+            { id: 'p036', name: '酥炸薯條', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=酥炸薯條' }
+        ]
+    },
+    {
+        categoryName: '甜點',
+        categoryIntro: '甜點分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/f1c40f/ffffff?text=甜點',
+        items: [
+            { id: 'p037', name: '抹茶煉乳糰子', desc: '本店特選推薦', price: 120, img: 'https://via.placeholder.com/300x200/f1c40f/ffffff?text=抹茶煉乳糰子' },
+            { id: 'p038', name: '双色地瓜球', desc: '本店特選推薦', price: 60, img: 'https://via.placeholder.com/300x200/f1c40f/ffffff?text=双色地瓜球' },
+            { id: 'p039', name: '花生麻糬炸吐司', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/f1c40f/ffffff?text=花生麻糬炸吐司' }
+        ]
+    },
+    {
+        categoryName: '狗食',
+        categoryIntro: '狗食分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/1abc9c/ffffff?text=狗食',
+        items: [
+            { id: 'p040', name: '狗狗餐', desc: '本店特選推薦', price: 60, img: 'https://via.placeholder.com/300x200/1abc9c/ffffff?text=狗狗餐' },
+            { id: 'p041', name: '狗狗食', desc: '本店特選推薦', price: 100, img: 'https://via.placeholder.com/300x200/1abc9c/ffffff?text=狗狗食' }
+        ]
+    },
+    {
+        categoryName: '定食',
+        categoryIntro: '定食分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/34495e/ffffff?text=定食',
+        items: [
+            { id: 'p042', name: '鱈魚西京燒定食', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=鱈魚西京燒定食' },
+            { id: 'p043', name: '蕃茄燉牛肉定食', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=蕃茄燉牛肉定食' },
+            { id: 'p044', name: '蜜製豚角煮定食', desc: '本店特選推薦', price: 240, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=蜜製豚角煮定食' },
+            { id: 'p045', name: '蒜香奶油蝦定食', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=蒜香奶油蝦定食' },
+            { id: 'p046', name: '明太子雞腿排定食', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=明太子雞腿排定食' },
+            { id: 'p047', name: '泡菜炒豚肉定食', desc: '本店特選推薦', price: 210, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=泡菜炒豚肉定食' },
+            { id: 'p048', name: '塩烤鯖魚定食', desc: '本店特選推薦', price: 240, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=塩烤鯖魚定食' },
+            { id: 'p049', name: '青醬蛤蜊烏龍麵定食', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=青醬蛤蜊烏龍麵定食' },
+            { id: 'p050', name: '豚肉炒烏龍麵定食', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=豚肉炒烏龍麵定食' },
+            { id: 'p051', name: '麻油唐揚雞定食', desc: '本店特選推薦', price: 220, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=麻油唐揚雞定食' },
+            { id: 'p052', name: '炸蝦天婦羅定食', desc: '本店特選推薦', price: 230, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=炸蝦天婦羅定食' },
+            { id: 'p053', name: '塩烤鮭魚大腹定食', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/34495e/ffffff?text=塩烤鮭魚大腹定食' }
+        ]
+    },
+    {
+        categoryName: '果實酒',
+        categoryIntro: '果實酒分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/7f8c8d/ffffff?text=果實酒',
+        items: [
+            { id: 'p054', name: '百香果果實酒', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/7f8c8d/ffffff?text=百香果果實酒' },
+            { id: 'p055', name: '洋香瓜果實酒', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/7f8c8d/ffffff?text=洋香瓜果實酒' },
+            { id: 'p056', name: '麝香葡萄果實酒', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/7f8c8d/ffffff?text=麝香葡萄果實酒' },
+            { id: 'p057', name: '海鹽葡萄柚果實酒', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/7f8c8d/ffffff?text=海鹽葡萄柚果實酒' }
+        ]
+    },
+    {
+        categoryName: '酒',
+        categoryIntro: '酒分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/e67e22/ffffff?text=酒',
+        items: [
+            { id: 'p058', name: '東方美人梅酒', desc: '本店特選推薦', price: 250, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=東方美人梅酒' },
+            { id: 'p059', name: '碧螺春梅酒', desc: '本店特選推薦', price: 250, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=碧螺春梅酒' },
+            { id: 'p060', name: '​Orion啤酒', desc: '本店特選推薦', price: 150, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​Orion啤酒' },
+            { id: 'p061', name: '​可樂角嗨', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​可樂角嗨' },
+            { id: 'p062', name: '​雪碧角嗨', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​雪碧角嗨' },
+            { id: 'p063', name: '蔓越莓沙瓦', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=蔓越莓沙瓦' },
+            { id: 'p064', name: '​韓柚沙瓦', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​韓柚沙瓦' },
+            { id: 'p065', name: '​檸檬沙瓦', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​檸檬沙瓦' },
+            { id: 'p066', name: '​葡萄柚沙瓦', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​葡萄柚沙瓦' },
+            { id: 'p067', name: '​梅酒', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​梅酒' },
+            { id: 'p068', name: '​柚子酒', desc: '本店特選推薦', price: 180, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=​柚子酒' },
+            { id: 'p069', name: '燒清酒', desc: '本店特選推薦', price: 200, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=燒清酒' },
+            { id: 'p070', name: '可爾必思沙瓦', desc: '本店特選推薦', price: 140, img: 'https://via.placeholder.com/300x200/e67e22/ffffff?text=可爾必思沙瓦' }
+        ]
+    },
+    {
+        categoryName: '飲料',
+        categoryIntro: '飲料分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/2ecc71/ffffff?text=飲料',
+        items: [
+            { id: 'p071', name: '​綠茶', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​綠茶' },
+            { id: 'p072', name: '​烏龍茶', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​烏龍茶' },
+            { id: 'p073', name: '​麥仔茶', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​麥仔茶' },
+            { id: 'p074', name: '​美粒果', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​美粒果' },
+            { id: 'p075', name: '​可樂', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​可樂' },
+            { id: 'p076', name: '​雪碧', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​雪碧' },
+            { id: 'p077', name: '​可爾必思', desc: '本店特選推薦', price: 80, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​可爾必思' },
+            { id: 'p078', name: '​王老吉', desc: '本店特選推薦', price: 90, img: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=​王老吉' }
+        ]
+    },
+    {
+        categoryName: '燒酒',
+        categoryIntro: '燒酒分類的精選餐點，歡迎點選。',
+        categoryImg: 'https://via.placeholder.com/150/3498db/ffffff?text=燒酒',
+        items: [
+            { id: 'p079', name: '​原味', desc: '本店特選推薦', price: 250, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​原味' },
+            { id: 'p080', name: '​柚子', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​柚子' },
+            { id: 'p081', name: '​白葡萄', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​白葡萄' },
+            { id: 'p082', name: '​優格', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​優格' },
+            { id: 'p083', name: '​青蘋果', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​青蘋果' },
+            { id: 'p084', name: '​水蜜桃', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​水蜜桃' },
+            { id: 'p085', name: '​草莓', desc: '本店特選推薦', price: 280, img: 'https://via.placeholder.com/300x200/3498db/ffffff?text=​草莓' }
+        ]
+    }
+];
 
         // --- 2. 狀態管理 ---
         const urlParams = new URLSearchParams(window.location.search);
