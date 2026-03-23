@@ -468,10 +468,24 @@
 
         // --- 6. 最終送出 ---
         function submitOrder() {
+            if (Object.keys(cart).length === 0) {
+                alert("請先將餐點加入購物車喔！");
+                return;
+            }
+
             const finalItems = [];
             for (const [itemId, qty] of Object.entries(cart)) {
                 const menuItem = itemLookup[itemId];
-                finalItems.push({ name: menuItem.name, price: menuItem.price, quantity: qty, subtotal: menuItem.price * qty });
+                if (menuItem) {
+                    finalItems.push({
+                        id: menuItem.id,       // 補上餐點 ID
+                        name: menuItem.name,
+                        price: menuItem.price,
+                        count: qty,            // 🌟 關鍵修復 1：把 quantity 改成 count
+                        subtotal: menuItem.price * qty,
+                        cartKey: `${menuItem.id}-base-${menuItem.price}` // 🌟 關鍵修復 2：補上你 POS 系統極度依賴的 cartKey
+                    });
+                }
             }
 
             const orderData = { 
