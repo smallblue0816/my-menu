@@ -330,13 +330,41 @@
                 totalPrice: parseInt(document.getElementById('review-total').innerText) 
             };
 
-            console.log("最終送出訂單：", JSON.stringify(orderData, null, 2));
-            alert("✅ 訂單已成功送出到廚房！\n請回座稍候，為您準備美味餐點。");
-            
-            // 送出後清空購物車並回到首頁 (模擬真實流程)
-            cart = {};
-            closeCart();
-            goHome();
+            // ⚠️ 請把下面引號內的網址，換成你剛剛在步驟三複製的 Firebase 網址！
+            // ⚠️ 並且一定要在網址最後面加上 orders.json
+            const FIREBASE_URL = "https://my-shop-pos-afbe7-default-rtdb.asia-southeast1.firebasedatabase.app/";
+
+            // 顯示載入中...
+            document.querySelector('.final-submit-btn').innerText = "傳送中...";
+            document.querySelector('.final-submit-btn').disabled = true;
+
+            // 透過 Fetch API 傳送資料到雲端
+            fetch(FIREBASE_URL, {
+                method: 'POST', // POST 代表「新增」一筆資料
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 傳送成功後的動作
+                alert("✅ 訂單已成功送出到廚房！\n請回座稍候，為您準備美味餐點。");
+                
+                // 恢復按鈕狀態並清空購物車回首頁
+                document.querySelector('.final-submit-btn').innerText = "✅ 確認無誤，送出訂單";
+                document.querySelector('.final-submit-btn').disabled = false;
+                cart = {};
+                closeCart();
+                goHome();
+            })
+            .catch(error => {
+                // 傳送失敗的動作
+                console.error("連線錯誤:", error);
+                alert("❌ 訂單傳送失敗，請檢查網路連線後再試一次！");
+                document.querySelector('.final-submit-btn').innerText = "✅ 確認無誤，送出訂單";
+                document.querySelector('.final-submit-btn').disabled = false;
+            });
         }
 
         // 初始啟動
