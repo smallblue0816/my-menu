@@ -473,26 +473,45 @@
                 return;
             }
 
+            // 1. 打包餐點明細 (確保有 price, count, subtotal, cartKey)
             const finalItems = [];
             for (const [itemId, qty] of Object.entries(cart)) {
                 const menuItem = itemLookup[itemId];
                 if (menuItem) {
                     finalItems.push({
-                        id: menuItem.id,       // 補上餐點 ID
+                        id: menuItem.id,
                         name: menuItem.name,
-                        price: menuItem.price,
-                        count: qty,            // 🌟 關鍵修復 1：把 quantity 改成 count
-                        subtotal: menuItem.price * qty,
-                        cartKey: `${menuItem.id}-base-${menuItem.price}` // 🌟 關鍵修復 2：補上你 POS 系統極度依賴的 cartKey
+                        price: Number(menuItem.price), // 確保傳送的是純數字
+                        count: Number(qty),            // POS 認得的數量變數
+                        subtotal: Number(menuItem.price) * Number(qty),
+                        cartKey: `${menuItem.id}-base-${menuItem.price}` // POS 合併防呆必備
                     });
                 }
             }
 
+            const finalTotalPrice = parseInt(document.getElementById('review-total').innerText);
+
+            // 2. 🌟 終極完美對齊：完全比照你 App.jsx 裡面的 newOrder 結構！
             const orderData = { 
                 table: tableNumber, 
-                timestamp: new Date().toISOString(), 
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), // POS 認得的時間變數
                 items: finalItems, 
-                totalPrice: parseInt(document.getElementById('review-total').innerText) 
+                paidItems: [], 
+                paidAmount: 0, 
+                total: finalTotalPrice,           // 🌟 POS 認得的總金額變數
+                originalTotal: finalTotalPrice,   // 🌟 POS 拆單折扣必備的原始金額
+                discount: 0, 
+                discountNote: '', 
+                discount80Count: 0, 
+                discount60Count: 0, 
+                customDiscountAmount: 0,
+                paidDiscount80Count: 0, 
+                paidDiscount60Count: 0, 
+                paidCustomDiscount: 0,
+                guestCount: 1, 
+                paidGuestCount: 0,
+                isPaid: false, 
+                isGoogleReviewed: false
             };
 
             // ⚠️ 請把下面引號內的網址，換成你剛剛在步驟三複製的 Firebase 網址！
@@ -507,8 +526,7 @@
             fetch(FIREBASE_URL, {
                 method: 'POST', // POST 代表「新增」一筆資料
                 headers: {
-                    'Content-Type': 'application/json'
-                },
+                    'Content-Type': 'application/json'},
                 body: JSON.stringify(orderData)
             })
             .then(response => response.json())
