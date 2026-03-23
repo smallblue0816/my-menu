@@ -313,8 +313,13 @@
 
         // --- 2. 狀態管理 ---
         const urlParams = new URLSearchParams(window.location.search);
-        const tableNumber = urlParams.get('table') || '外帶/未指定';
-        document.getElementById('table-display').innerText = `內用桌號：${tableNumber}`;
+        const rawTable = urlParams.get('table'); // 先抓取網址上的純數字或文字
+        
+        // 🌟 自動對齊 POS 系統的桌號名稱：
+        // 如果網址有傳數字(例如 1)，就自動組合成「桌號 1」；如果沒傳，就預設為「外帶」
+        const tableNumber = rawTable ? `桌號 ${rawTable}` : '外帶/未指定';
+        
+        document.getElementById('table-display').innerText = `目前位置：${tableNumber}`;
 
         let cart = {}; 
         let currentCategoryIndex = -1; 
